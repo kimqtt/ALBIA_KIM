@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ALBIA_LAB1 {
+public class ALBIA_Lab1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter number: ");
