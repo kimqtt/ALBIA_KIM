@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+public class StudentEnrollment {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input student information
+        System.out.print("Enter Student Name: ");
+        String studentName = scanner.nextLine();
+        System.out.print("Enter Course: ");
+        String course = scanner.nextLine();
+        System.out.print("Enter Course Code: ");
+        String courseCode = scanner.nextLine();
+        System.out.print("Enter Number of Units: ");
+        int numberOfUnits = scanner.nextInt();
+
+        // Validate number of units
+        if (numberOfUnits > 10) {
+            System.out.println("Error: Maximum number of units allowed is 10.");
+            return; // Exit the program if invalid input
+        }
+
+        // Calculate enrollment fee
+        double enrollmentFee = calculateEnrollmentFee(numberOfUnits);
+
+        // Display student information and enrollment fee
+        System.out.println("\nStudent Name: " + studentName);
+        System.out.println("Total Enrollment Fee: " + enrollmentFee);
+
+        // Payment processing
+        System.out.print("Enter Payment Amount: ");
+        double paymentAmount = scanner.nextDouble();
+
+        // Check payment status
+        processPayment(enrollmentFee, paymentAmount);
+
+        scanner.close();
+    }
+
+    // Method to calculate enrollment fee
+    public static double calculateEnrollmentFee(int numberOfUnits) {
+        return numberOfUnits * 1000; // Fee per unit is 1000
+    }
+
+    // Method to process payment
+    public static void processPayment(double enrollmentFee, double paymentAmount) {
+        if (paymentAmount == enrollmentFee) {
+            System.out.println("Fully Paid");
+        } else if (paymentAmount < enrollmentFee) {
+            System.out.println("Partial Payment");
+            System.out.println("Amount Paid: " + paymentAmount);
+            System.out.println("Balance Due: " + (enrollmentFee - paymentAmount));
+        } else {
+            System.out.println("Overpaid");
+            System.out.println("Amount Paid: " + paymentAmount);
+            System.out.println("Excess Amount: " + (paymentAmount - enrollmentFee));
+        }
+    }
+}
