@@ -4,57 +4,64 @@ public class StudentEnrollment {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        final int feePerUnit = 1000; // Fee per unit is 1000
 
-        // Input student information
+        // Initial message to the user
+        System.out.println("   Student Enrollment System");
+
+        // Input necessary student information
         System.out.print("Enter Student Name: ");
         String studentName = scanner.nextLine();
-        System.out.print("Enter Course: ");
-        String course = scanner.nextLine();
+
+        System.out.print("Enter Course Name: ");
+        String courseName = scanner.nextLine();
+
         System.out.print("Enter Course Code: ");
         String courseCode = scanner.nextLine();
-        System.out.print("Enter Number of Units: ");
-        int numberOfUnits = scanner.nextInt();
 
-        // Validate number of units
-        if (numberOfUnits > 10) {
-            System.out.println("Error: Maximum number of units allowed is 10.");
-            return; // Exit the program if invalid input
-        }
+        int totalUnits = 0;
 
-        // Calculate enrollment fee
-        double enrollmentFee = calculateEnrollmentFee(numberOfUnits);
+        // Ask the user's number of subjects and it is maximum of 10 only
+        do {
+            System.out.print("Enter number of units (Max 10): ");
+            totalUnits = scanner.nextInt();
+            if (totalUnits > 10) {
+                System.out.println("Error: Max of 10 only.");
+            }
+        } while (totalUnits > 10);
 
-        // Display student information and enrollment fee
-        System.out.println("\nStudent Name: " + studentName);
-        System.out.println("Total Enrollment Fee: " + enrollmentFee);
+        // Calculate the total enrollment fee
+        int totalFee = totalUnits * feePerUnit;
 
-        // Payment processing
-        System.out.print("Enter Payment Amount: ");
-        double paymentAmount = scanner.nextDouble();
+        // Display student info and total fee
+        System.out.println("\n    Enrollment Summary");
+        System.out.println("Student Name: " + studentName);
+        System.out.println("Course Name: " + courseName);
+        System.out.println("Course Code: " + courseCode);
+        System.out.println("Total Units: " + totalUnits);
+        System.out.println("Total Enrollment Fee: " + totalFee + " PHP");
 
-        // Check payment status
-        processPayment(enrollmentFee, paymentAmount);
+        // Ask for the amount
+        System.out.print("\nEnter payment amount: ");
+        int paymentAmount = scanner.nextInt();
 
-        scanner.close();
-    }
-
-    // Method to calculate enrollment fee
-    public static double calculateEnrollmentFee(int numberOfUnits) {
-        return numberOfUnits * 1000; // Fee per unit is 1000
-    }
-
-    // Method to process payment
-    public static void processPayment(double enrollmentFee, double paymentAmount) {
-        if (paymentAmount == enrollmentFee) {
-            System.out.println("Fully Paid");
-        } else if (paymentAmount < enrollmentFee) {
-            System.out.println("Partial Payment");
-            System.out.println("Amount Paid: " + paymentAmount);
-            System.out.println("Balance Due: " + (enrollmentFee - paymentAmount));
+        // Check payment 
+        if (paymentAmount == totalFee) {
+            System.out.println("Payment Status: Fully Paid");
+        } else if (paymentAmount < totalFee) {
+            int remaining = totalFee - paymentAmount;
+            System.out.println("Payment Status: Partial Payment");
+            System.out.println("Amount Paid: " + paymentAmount + " PHP");
+            System.out.println("Remaining Balance: " + remaining + " PHP");
         } else {
-            System.out.println("Overpaid");
-            System.out.println("Amount Paid: " + paymentAmount);
-            System.out.println("Excess Amount: " + (paymentAmount - enrollmentFee));
+            System.out.println("Payment Status: Overpaid");
+            int overpayment = paymentAmount - totalFee;
+            System.out.println("Overpayment Amount: " + overpayment + " PHP");
         }
+
+        // Close the scanner 
+        // end the program
+        System.out.println("\nThank you for using the Student Enrollment System!");
+        scanner.close();
     }
 }
